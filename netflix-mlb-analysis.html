@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="넷플릭스 MLB 첫 생중계, 한국 시청자 관점에서 본 성공과 실패 시나리오 완전 분석">
+<meta name="keywords" content="넷플릭스 MLB 중계, 이정후, 양키스 자이언츠, 넷플릭스 야구, MLB 한국 중계, 오승환 해설">
+<title>넷플릭스 MLB 중계 성공할까? | MLB DAILY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --bg4: #0a1520;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --red: #e03434;
+    --green: #2ecc71;
+    --blue: #3498db;
+    --netflix: #e50914;
+    --text: #e8e0d0;
+    --text-dim: #7a7060;
+    --border: rgba(201,168,76,0.12);
+    --border-red: rgba(224,52,52,0.2);
+    --border-green: rgba(46,204,113,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* NOISE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.95);
+    backdrop-filter: blur(12px);
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .back-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--gold); }
+
+  /* COVER */
+  .cover {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 4rem 2rem 3rem;
+    overflow: hidden;
+  }
+
+  .cover-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 80% 50%, rgba(229,9,20,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* VERDICT BADGES */
+  .badge-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .badge-netflix { border-color: var(--netflix); color: var(--netflix); }
+  .badge-analysis { border-color: var(--gold); color: var(--gold); }
+  .badge-korea { border-color: var(--blue); color: var(--blue); }
+
+  .cover-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: #fff;
+    margin-bottom: 1.2rem;
+  }
+
+  .cover-title .netflix-red { color: var(--netflix); }
+  .cover-title .gold { color: var(--gold); }
+
+  .cover-lead {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(232,224,208,0.7);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+  }
+
+  /* VERDICT METER */
+  .verdict-bar-wrap {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .verdict-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+  }
+
+  .verdict-meter {
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .verdict-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--netflix), var(--gold));
+    width: 68%;
+    animation: fillIn 1.5s ease 0.3s both;
+  }
+
+  @keyframes fillIn {
+    from { width: 0; }
+    to { width: 68%; }
+  }
+
+  .verdict-ends {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .verdict-score {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    opacity: 0.3;
+  }
+
+  /* MAIN LAYOUT */
+  .article-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0 2rem;
+  }
+
+  .divider-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .divider-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SCENARIO CARDS */
+  .scenario-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .scenario-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    padding: 0.3rem 0.8rem;
+  }
+
+  .scenario-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* SUCCESS */
+  .success-block {
+    border: 1px solid var(--border-green);
+    background: rgba(46,204,113,0.03);
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .success-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
+  .success-block .scenario-label {
+    background: rgba(46,204,113,0.1);
+    color: var(--green);
+    border: 1px solid rgba(46,204,113,0.3);
+  }
+
+  /* FAILURE */
+  .fail-block {
+    border: 1px solid var(--border-red);
+    background: rgba(224,52,52,0.03);
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fail-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  .fail-block .scenario-label {
+    background: rgba(224,52,52,0.1);
+    color: var(--red);
+    border: 1px solid rgba(224,52,52,0.3);
+  }
+
+  /* CARD BODY */
+  .card-body {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .card-body p {
+    font-size: 0.92rem;
+    line-height: 1.95;
+    color: rgba(232,224,208,0.82);
+    margin-bottom: 0.9rem;
+  }
+
+  .card-body p:last-child { margin-bottom: 0; }
+
+  .card-body strong { color: var(--gold2); font-weight: 500; }
+  .card-body .r { color: #ff6b6b; font-weight: 500; }
+  .card-body .g { color: #6bffb8; font-weight: 500; }
+
+  /* POINT LIST */
+  .point-list {
+    list-style: none;
+    margin: 1rem 0;
+  }
+
+  .point-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: rgba(232,224,208,0.8);
+  }
+
+  .point-list li:last-child { border-bottom: none; }
+
+  .point-icon { flex-shrink: 0; font-size: 1rem; margin-top: 0.1rem; }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+  }
+
+  .compare-table th {
+    padding: 0.8rem 1rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .compare-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .compare-table .item-name {
+    color: var(--gold2);
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: 100px;
+  }
+
+  .compare-table .good { color: #6bffb8; }
+  .compare-table .bad { color: #ff6b6b; }
+  .compare-table .neutral { color: var(--text-dim); }
+
+  /* KEY BOX */
+  .key-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+  }
+
+  .key-box::before {
+    content: attr(data-label);
+    position: absolute;
+    top: -0.6rem;
+    left: 1rem;
+    background: var(--bg);
+    padding: 0 0.6rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .key-box p {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: rgba(232,224,208,0.8);
+  }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .stat-cell {
+    background: var(--bg3);
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: block;
+  }
+
+  .stat-desc {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  /* VERDICT SECTION */
+  .verdict-section {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(229,9,20,0.03) 100%);
+    border: 1px solid var(--gold);
+    padding: 2.5rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .verdict-section::before {
+    content: '최종 판단';
+    position: absolute;
+    top: -0.7rem;
+    left: 1.5rem;
+    background: var(--bg);
+    padding: 0 0.8rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .verdict-section h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  .verdict-section p {
+    font-size: 0.95rem;
+    line-height: 1.95;
+    color: rgba(232,224,208,0.85);
+    margin-bottom: 0.8rem;
+  }
+
+  /* NETFLIX CONTEXT BOX */
+  .netflix-box {
+    background: rgba(229,9,20,0.05);
+    border: 1px solid rgba(229,9,20,0.2);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .netflix-box-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--netflix);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .netflix-box p {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(232,224,208,0.8);
+  }
+
+  /* PREDICTION GRID */
+  .pred-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .pred-card {
+    padding: 1.2rem;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+  }
+
+  .pred-card-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .pred-card-label.g { color: var(--green); }
+  .pred-card-label.r { color: var(--red); }
+
+  .pred-card-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .pred-card p {
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cover { animation: fadeUp 0.7s ease both; }
+  .success-block { animation: fadeUp 0.5s ease 0.1s both; }
+  .fail-block { animation: fadeUp 0.5s ease 0.2s both; }
+
+  /* FOOTER */
+  .article-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .article-footer-text {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .tag-list {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 640px) {
+    .pred-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr; }
+    .compare-table { font-size: 0.78rem; }
+    .cover-title { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">MLB DAILY</a>
+    <a href="index.html" class="back-link">← 오늘의 경기로</a>
+  </div>
+</header>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+
+  <div class="badge-row">
+    <span class="badge badge-netflix">⬛ Netflix × MLB</span>
+    <span class="badge badge-analysis">📊 심층 분석</span>
+    <span class="badge badge-korea">🇰🇷 한국 시청자 관점</span>
+  </div>
+
+  <h1 class="cover-title">
+    넷플릭스, 야구를 집어삼킬까<br>
+    <span class="netflix-red">첫 MLB 중계</span>의 <span class="gold">성공과 실패</span> 시나리오
+  </h1>
+
+  <p class="cover-lead">
+    오늘 오전 9시, 넷플릭스 역사상 처음으로 MLB 경기가 생중계됩니다.
+    한국어 중계까지 지원하며 야심차게 뛰어든 넷플릭스.
+    과연 한국 야구 팬들에게 어떻게 받아들여질까요?
+    성공했을 때와 실패했을 때, 각각의 시나리오를 한국 시청자 관점에서 낱낱이 분석합니다.
+  </p>
+
+  <!-- 기대지수 미터 -->
+  <div class="verdict-bar-wrap">
+    <div class="verdict-label">한국 시청자 기대 지수</div>
+    <div class="verdict-meter">
+      <div class="verdict-fill"></div>
+    </div>
+    <div class="verdict-ends">
+      <span>0 — 실망</span>
+      <span>100 — 완벽</span>
+    </div>
+    <div class="verdict-score">68</div>
+  </div>
+
+  <!-- 핵심 수치 -->
+  <div class="stat-row">
+    <div class="stat-cell">
+      <span class="stat-num">3년</span>
+      <div class="stat-desc">넷플릭스 MLB 계약 기간</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">734억</span>
+      <div class="stat-desc">연간 중계권 비용 (원)</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">1,840만</span>
+      <div class="stat-desc">BTS 생중계 당일 시청자 수</div>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<div class="article-wrap">
+
+  <!-- 배경 -->
+  <div class="section-divider">
+    <span class="divider-icon">📡</span>
+    <h2 class="divider-title">왜 이 중계가 특별한가</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="key-box" data-label="먼저 알아야 할 것">
+    <p>
+      오늘 경기는 단순한 야구 경기가 아닙니다. <strong>넷플릭스가 MLB 경기를 생중계하는 역사상 첫 번째 날</strong>입니다.
+      한국 시청자 입장에서 특히 흥미로운 건, 한국어 중계가 공식으로 제공된다는 점입니다.
+      해설은 오승환(통산 549세이브, 한·미·일 무대를 모두 경험한 '끝판대장')과
+      김명정 캐스터가 맡습니다. 그리고 경기에는 우리의 이정후가 출전합니다.
+      한국 팬에게는 관심을 가질 이유가 차고 넘칩니다.
+    </p>
+  </div>
+
+  <div class="netflix-box">
+    <div class="netflix-box-label">📺 넷플릭스 스포츠 중계 이력</div>
+    <p>
+      넷플릭스는 이미 제이크 폴 vs 마이크 타이슨 복싱, WWE 주간 경기,
+      그리고 BTS 컴백 라이브(전 세계 1,840만 시청)를 성공적으로 중계한 바 있습니다.
+      그러나 야구는 결이 다릅니다. 3시간이 넘는 긴 경기, 끊김 없는 스트리밍 품질,
+      실시간 데이터 연동 — 이 모든 것이 '처음'입니다.
+      734억 원을 연간 지불한 만큼, 넷플릭스도 절대 실패할 수 없는 판입니다.
+    </p>
+  </div>
+
+  <!-- ========== 성공 시나리오 ========== -->
+  <div class="section-divider">
+    <span class="divider-icon">✅</span>
+    <h2 class="divider-title" style="color: var(--green)">성공 시나리오</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 성공 1 -->
+  <div class="success-block">
+    <div class="scenario-header">
+      <span class="scenario-label">SUCCESS 01</span>
+      <span class="scenario-title">이정후가 터진다 — 한국 팬 결집의 순간</span>
+    </div>
+    <div class="card-body">
+      <p>
+        성공 시나리오의 핵심 트리거는 단연 <strong>이정후의 활약</strong>입니다.
+        스프링캠프에서 타율 0.455라는 압도적인 성적을 남긴 이정후가
+        개막전 첫 타석부터 강렬한 인상을 남긴다면,
+        "오늘 이정후 어때?" 하고 넷플릭스를 켠 신규 시청자들이
+        그대로 야구 팬이 될 가능성이 높습니다.
+      </p>
+      <p>
+        특히 <strong>홈런이나 결정적인 타점</strong>이 터지는 순간,
+        오승환 해설위원의 감탄사와 함께 소셜 미디어에서 클립이 퍼지고,
+        "넷플릭스 야구 중계 생각보다 괜찮은데?"라는 반응이 나올 수 있습니다.
+        한국 팬에게 이정후는 단순한 선수가 아닙니다.
+        WBC 대표팀 캡틴이었고, 한국 야구의 자부심입니다.
+      </p>
+      <ul class="point-list">
+        <li><span class="point-icon">⚾</span><span>이정후 홈런 → SNS 클립 바이럴 → 신규 야구 팬 유입</span></li>
+        <li><span class="point-icon">🎙️</span><span>오승환 해설의 현장감 있는 분석이 "진짜 야구 해설"로 호평받을 경우</span></li>
+        <li><span class="point-icon">📱</span><span>모바일·TV 동시 시청이 원활하면 "이게 바로 스포츠 OTT지"라는 긍정 반응 확산</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 성공 2 -->
+  <div class="success-block">
+    <div class="scenario-header">
+      <span class="scenario-label">SUCCESS 02</span>
+      <span class="scenario-title">화질·끊김 없음 — "역시 넷플릭스" 기술적 성공</span>
+    </div>
+    <div class="card-body">
+      <p>
+        한국 야구 팬들이 기존에 MLB를 보던 방식을 기억해야 합니다.
+        MLB.tv는 해외 서버 문제로 끊김이 잦았고,
+        화질이 불안정하다는 악명이 있었습니다.
+        그에 비해 <strong>넷플릭스의 안정적인 스트리밍 인프라</strong>가
+        제대로 작동한다면, 이 하나만으로도 "혁신"이 됩니다.
+      </p>
+      <p>
+        특히 <strong>TV 앱 + 모바일 동시 지원</strong>,
+        한국어 자막과 해설 선택 기능,
+        프리게임·포스트게임 콘텐츠까지 하나의 플랫폼에서 해결된다면
+        기존 야구 팬층의 이탈을 막고 새로운 구독자를 끌어들이는 효과를 낼 수 있습니다.
+      </p>
+      <div class="key-box" data-label="한국 시청자가 기대하는 것">
+        <p>
+          HD 이상 화질 유지 · 한국어 해설 자연스러움 · 프리게임 분석 콘텐츠의 질
+          · 경기 중 통계 오버레이(타구속도, 투구궤적 등) · 다시보기 즉시 제공
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 성공 3 -->
+  <div class="success-block">
+    <div class="scenario-header">
+      <span class="scenario-label">SUCCESS 03</span>
+      <span class="scenario-title">야구 비팬의 유입 — 넷플릭스가 MLB 저변을 넓힌다</span>
+    </div>
+    <div class="card-body">
+      <p>
+        가장 이상적인 성공 시나리오는 <strong>기존 야구 팬이 아닌 사람들이 켜는 것</strong>입니다.
+        넷플릭스 구독자 중 야구를 원래 보지 않던 사람이
+        "이정후 나온다고?" 혹은 "다들 보는 것 같아서" 켜봤다가,
+        야구의 재미에 빠지는 경우입니다.
+      </p>
+      <p>
+        이는 MLB 입장에서도 한국 넷플릭스 입장에서도
+        중장기적으로 가장 큰 수확입니다.
+        <strong>스포츠 중계가 드라마처럼 자연스럽게 소비되는 콘텐츠</strong>가 될 수 있습니다.
+        BTS 라이브가 K팝 비팬을 끌어들였듯이, 이정후의 활약이 야구 비팬을 끌어들일 수 있습니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== 실패 시나리오 ========== -->
+  <div class="section-divider">
+    <span class="divider-icon">⚠️</span>
+    <h2 class="divider-title" style="color: var(--red)">실패 시나리오</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 실패 1 -->
+  <div class="fail-block">
+    <div class="scenario-header">
+      <span class="scenario-label">RISK 01</span>
+      <span class="scenario-title">끊기는 화면 — 야구보다 버퍼링이 더 많이 보인다</span>
+    </div>
+    <div class="card-body">
+      <p>
+        한국은 세계 최고 수준의 인터넷 속도를 자랑하지만,
+        동시에 스트리밍 품질에 대한 기준도 세계에서 가장 높은 나라 중 하나입니다.
+        만약 오늘 경기 도중 <strong>버퍼링이 한 번이라도 발생</strong>한다면,
+        소셜 미디어는 순식간에 "넷플릭스 야구 끊긴다"는 글로 가득 찰 것입니다.
+      </p>
+      <p>
+        특히 오승환이 결정적인 장면을 해설하는 순간 화면이 멈춘다면
+        — <span class="r">이 하나의 장면이 넷플릭스 스포츠 중계에 대한 인식을 1년은 망칠 수 있습니다.</span>
+        BTS 라이브 당시에도 일부 끊김 이슈가 있었고, 야구는 더 긴 시간 동안 안정성을 유지해야 합니다.
+      </p>
+      <ul class="point-list">
+        <li><span class="point-icon">💥</span><span>결정적 장면(홈런, 끝내기) 버퍼링 = 최악의 시나리오</span></li>
+        <li><span class="point-icon">📉</span><span>한 번의 기술적 실패가 "넷플릭스로 스포츠는 안 된다"는 인식 고착화</span></li>
+        <li><span class="point-icon">🔄</span><span>기존 MLB.tv 이용자들이 "역시 불안해서 못 보겠다" 복귀</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 실패 2 -->
+  <div class="fail-block">
+    <div class="scenario-header">
+      <span class="scenario-label">RISK 02</span>
+      <span class="scenario-title">"한국에선 못 본다" — 중계권 지역 제한 문제</span>
+    </div>
+    <div class="card-body">
+      <p>
+        사실 이게 가장 큰 아이러니입니다.
+        오늘 경기는 <strong>한국어 중계를 제공</strong>하면서 한국 팬을 적극적으로 공략하고 있습니다.
+        그런데 과거 넷플릭스 관계자는 "한국 내에서 넷플릭스로 MLB 생중계를 시청할 수 없다"고
+        밝힌 바 있습니다.
+      </p>
+      <p>
+        2026 시즌 들어 이 문제가 해소됐는지 여부가 오늘 중요한 검증 포인트입니다.
+        만약 <span class="r">한국어 해설을 만들어놓고 정작 한국에서 시청이 막혀있다면</span>,
+        이는 단순한 기술적 실패가 아니라 마케팅 대참사가 됩니다.
+        "이정후 나오는 경기 이정후 팬이 못 보는" 황당한 상황입니다.
+      </p>
+      <div class="netflix-box">
+        <div class="netflix-box-label">⚠️ 확인 필요 사항</div>
+        <p>
+          오늘 경기를 시청하기 전, 넷플릭스 앱에서 'MLB 개막전'을 검색해보세요.
+          한국 계정으로 시청 가능 여부가 바로 확인됩니다.
+          만약 시청 불가 메시지가 뜬다면, 그것 자체가 오늘의 가장 큰 뉴스가 될 것입니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 실패 3 -->
+  <div class="fail-block">
+    <div class="scenario-header">
+      <span class="scenario-label">RISK 03</span>
+      <span class="scenario-title">이정후 부진 + 자이언츠 패배 — 흥행 공식이 무너진다</span>
+    </div>
+    <div class="card-body">
+      <p>
+        한국 시청자가 오늘 경기를 보는 가장 큰 이유는 솔직히 말해 <strong>이정후</strong>입니다.
+        그런데 만약 이정후가 4타수 무안타로 부진하고,
+        자이언츠가 일방적으로 패배하는 경기가 전개된다면 어떻게 될까요?
+      </p>
+      <p>
+        <span class="r">중반부터 시청자가 이탈하기 시작하고,</span>
+        "MLB 역시 재미없어", "이정후 좀 더 잘했으면"하는 반응이 나옵니다.
+        물론 이것은 넷플릭스의 잘못이 아닙니다.
+        하지만 <strong>첫인상은 잔인합니다.</strong>
+        "넷플릭스로 처음 야구 봤는데 별로였다"는 기억은 오래 갑니다.
+      </p>
+      <p>
+        스포츠 중계에서 콘텐츠(경기 내용)와 플랫폼(중계 품질)은 분리되어야 하지만,
+        시청자들의 감정은 그렇게 분리되지 않습니다.
+        <strong>이것이 스포츠 중계가 드라마 중계보다 훨씬 위험한 이유</strong>입니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- 비교 분석 테이블 -->
+  <div class="section-divider">
+    <span class="divider-icon">📊</span>
+    <h2 class="divider-title">성공 vs 실패 핵심 비교</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th style="color: var(--green)">성공 시나리오</th>
+        <th style="color: var(--red)">실패 시나리오</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item-name">이정후</td>
+        <td class="good">홈런·다타점으로 한국 팬 열광</td>
+        <td class="bad">무안타·아쉬운 수비로 팬 실망</td>
+      </tr>
+      <tr>
+        <td class="item-name">스트리밍 품질</td>
+        <td class="good">끊김 없이 HD 유지, "역시 넷플릭스"</td>
+        <td class="bad">결정적 장면 버퍼링 발생</td>
+      </tr>
+      <tr>
+        <td class="item-name">한국어 해설</td>
+        <td class="good">오승환의 전문적·친근한 해설로 호평</td>
+        <td class="bad">해설이 어색하거나 지역 제한 차단</td>
+      </tr>
+      <tr>
+        <td class="item-name">경기 내용</td>
+        <td class="good">접전·역전·홈런 등 극적인 전개</td>
+        <td class="bad">일방적 경기, 3시간이 지루하게 느껴짐</td>
+      </tr>
+      <tr>
+        <td class="item-name">사후 반응</td>
+        <td class="good">"이제 야구는 넷플릭스로 본다" 정착</td>
+        <td class="bad">"이번 한 번으로 끝" 이탈</td>
+      </tr>
+      <tr>
+        <td class="item-name">장기 영향</td>
+        <td class="good">MLB 한국 팬층 확대, OTT 스포츠 시대 개막</td>
+        <td class="bad">넷플릭스 스포츠 중계 신뢰도 하락</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 넷플릭스 미래 예측 -->
+  <div class="section-divider">
+    <span class="divider-icon">🔮</span>
+    <h2 class="divider-title">오늘 이후 — 넷플릭스 MLB의 미래</h2>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="pred-grid">
+    <div class="pred-card">
+      <div class="pred-card-label g">긍정 전망</div>
+      <div class="pred-card-title">OTT가 스포츠 중계의 새 표준이 된다</div>
+      <p>7월 홈런 더비, 8월 필드 오브 드림스 경기까지 이어지는 넷플릭스 MLB 라인업이 성공적으로 안착하면, 케이블·위성 방송 시대가 진짜로 저문다는 신호탄이 됩니다.</p>
+    </div>
+    <div class="pred-card">
+      <div class="pred-card-label g">긍정 전망</div>
+      <div class="pred-card-title">한국어 중계 확대, 이정후 전 경기 중계 가능성</div>
+      <p>오늘 개막전이 성공하면 넷플릭스가 자이언츠 경기 추가 중계권 확보에 나설 수 있습니다. 한국 시장을 공략하는 최고의 카드가 이정후이기 때문입니다.</p>
+    </div>
+    <div class="pred-card">
+      <div class="pred-card-label r">부정 전망</div>
+      <div class="pred-card-title">중계권 파편화로 한국 팬 피로감 증가</div>
+      <p>넷플릭스, ESPN+, 애플TV+를 모두 구독해야 MLB를 온전히 볼 수 있는 상황. 월 8만 원이 넘는 구독료는 한국 팬들에게 진입 장벽이 됩니다.</p>
+    </div>
+    <div class="pred-card">
+      <div class="pred-card-label r">부정 전망</div>
+      <div class="pred-card-title">첫술에 배부를 수 없다 — 2~3년 관망 필요</div>
+      <p>기술적 완성도와 중계 노하우는 하루아침에 만들어지지 않습니다. 오늘 시범 수준이라면, 진짜 평가는 시즌 중반 이후에나 가능합니다.</p>
+    </div>
+  </div>
+
+  <!-- 최종 판단 -->
+  <div class="verdict-section">
+    <h2>⚾ 한국 시청자 관점의 결론</h2>
+    <p>
+      오늘 넷플릭스 MLB 개막전은 <strong>야구 역사의 한 페이지</strong>입니다.
+      이정후, 애런 저지, 오승환 해설, 한국어 중계 — 이 조합은
+      한국 팬들에게 지금껏 없던 MLB 시청 경험을 약속합니다.
+    </p>
+    <p>
+      성공의 핵심은 단 두 가지입니다.
+      <strong>이정후가 활약하는가</strong>, 그리고 <strong>화면이 끊기지 않는가</strong>.
+      이 두 가지만 충족되어도 오늘은 성공입니다.
+    </p>
+    <p>
+      하지만 장기적 관점에서 진짜 숙제는 따로 있습니다.
+      연간 734억 원을 투자해 중계권을 가져왔지만,
+      그 비용이 결국 구독료 인상으로 이어진다면 팬들의 박수가 불만으로 바뀔 수 있습니다.
+      <strong>넷플릭스가 MLB를 대중화하는 선한 역할을 하느냐,
+      아니면 야구를 더 비싼 콘텐츠로 만드느냐</strong> — 그 답은 앞으로 3년이 말해줄 것입니다.
+    </p>
+    <p style="margin-top:1.2rem; color: var(--gold2); font-weight: 500;">
+      일단 오늘은 켜세요. 이정후를 응원하세요. 평가는 경기가 끝나고 해도 늦지 않습니다. ⚾
+    </p>
+  </div>
+
+  <!-- 태그 & 날짜 -->
+  <div class="article-footer">
+    <div class="tag-list">
+      <span class="tag">#넷플릭스MLB</span>
+      <span class="tag">#이정후</span>
+      <span class="tag">#MLB개막전</span>
+      <span class="tag">#야구중계</span>
+      <span class="tag">#오승환해설</span>
+    </div>
+    <div class="article-footer-text">2026.03.26 · MLB DAILY</div>
+  </div>
+
+</div>
+</body>
+</html>
