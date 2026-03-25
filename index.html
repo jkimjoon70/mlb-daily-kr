@@ -3,783 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="MLB 매일 경기 심층 분석 | 쉬운 말로 풀어주는 야구 이야기, 다음 경기 예측까지">
-<meta name="keywords" content="MLB, 메이저리그, 경기분석, 야구, 오타니, 다저스, 경기예측">
-<title>MLB DAILY | 매일 경기 심층 분석</title>
+<meta name="description" content="샌프란시스코 자이언츠 2026 시즌 전력 분석 | 선수단 변동, 이정후, 개막전 전망 완전 정리">
+<meta name="keywords" content="샌프란시스코 자이언츠, 2026 MLB, 이정후, 맷 채프먼, 로건 웹, 자이언츠 전력분석, MLB 개막전">
+<title>SF 자이언츠 2026 시즌 전력 예상 | MLB DAILY</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #080c10;
-    --bg2: #0d1117;
-    --bg3: #111820;
-    --gold: #c9a84c;
-    --gold2: #e8c97a;
-    --red: #e03434;
-    --blue: #2a6fc9;
-    --text: #e8e0d0;
-    --text-dim: #8a8070;
-    --border: rgba(201,168,76,0.15);
-    --glow: rgba(201,168,76,0.08);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  /* ── HEADER ── */
-  header {
-    position: relative;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%);
-  }
-
-  .header-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 72px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    text-decoration: none;
-  }
-
-  .logo-main {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .logo-sub {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-  }
-
-  nav {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  nav a {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  nav a:hover { color: var(--gold); }
-
-  .nav-cta {
-    border: 1px solid var(--gold);
-    padding: 0.4rem 1rem;
-    color: var(--gold) !important;
-    font-size: 0.7rem !important;
-  }
-
-  /* ── TICKER ── */
-  .ticker {
-    background: var(--gold);
-    overflow: hidden;
-    height: 32px;
-    display: flex;
-    align-items: center;
-  }
-
-  .ticker-label {
-    background: #000;
-    color: var(--gold);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    padding: 0 1rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .ticker-track {
-    display: flex;
-    animation: ticker 30s linear infinite;
-    white-space: nowrap;
-  }
-
-  .ticker-track span {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #000;
-    padding: 0 2rem;
-    letter-spacing: 0.05em;
-  }
-
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 5rem 2rem 3rem;
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    width: 2rem;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .hero-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 1.5rem;
-    color: #fff;
-  }
-
-  .hero-title em {
-    font-style: normal;
-    color: var(--gold);
-  }
-
-  .hero-lead {
-    font-size: 1rem;
-    line-height: 1.85;
-    color: rgba(232,224,208,0.75);
-    margin-bottom: 2rem;
-    max-width: 56ch;
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
-
-  .meta-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .meta-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.05em;
-    color: var(--gold);
-  }
-
-  /* ── SCOREBOARD CARD ── */
-  .scoreboard {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scoreboard::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
-  .score-header {
-    padding: 1rem 1.2rem 0.6rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .score-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  .score-status {
-    font-size: 0.6rem;
-    background: var(--red);
-    color: #fff;
-    padding: 0.15rem 0.5rem;
-    letter-spacing: 0.1em;
-  }
-
-  .score-body { padding: 1.2rem; }
-
-  .score-row {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    padding: 0.6rem 0;
-    gap: 1rem;
-  }
-
-  .score-row + .score-row {
-    border-top: 1px solid var(--border);
-  }
-
-  .team-info { display: flex; flex-direction: column; gap: 0.1rem; }
-
-  .team-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.08em;
-    color: #fff;
-  }
-
-  .team-record {
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    letter-spacing: 0.05em;
-  }
-
-  .team-score {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem;
-    letter-spacing: 0.05em;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .team-score.lose { color: var(--text-dim); }
-
-  .winner-tag {
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    padding: 0.1rem 0.3rem;
-  }
-
-  .innings-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.8rem 0 0.2rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .inn-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .inn-num {
-    font-size: 0.55rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-  }
-
-  .inn-score {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text);
-  }
-
-  /* ── MAIN CONTENT ── */
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 2rem 6rem;
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 3rem;
-  }
-
-  /* ── ARTICLE ── */
-  article { min-width: 0; }
-
-  .section-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .section-tag::after {
-    content: '';
-    width: 3rem;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .analysis-block {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .analysis-block::after {
-    content: attr(data-num);
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    color: rgba(201,168,76,0.04);
-    letter-spacing: -0.02em;
-    pointer-events: none;
-  }
-
-  .block-icon {
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .block-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 1rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .block-body {
-    font-size: 0.92rem;
-    line-height: 1.95;
-    color: rgba(232,224,208,0.8);
-  }
-
-  .block-body p + p { margin-top: 0.8rem; }
-
-  .highlight {
-    background: linear-gradient(180deg, transparent 60%, rgba(201,168,76,0.2) 60%);
-    color: var(--gold2);
-    font-weight: 500;
-  }
-
-  /* ── KEY MOMENT ── */
-  .key-moment {
-    border-left: 3px solid var(--gold);
-    padding: 1rem 1.2rem;
-    background: rgba(201,168,76,0.05);
-    margin: 1rem 0;
-  }
-
-  .key-moment-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-
-  .key-moment p {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--text);
-  }
-
-  /* ── PLAYER CARDS ── */
-  .player-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .player-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    padding: 1.2rem;
-  }
-
-  .player-card.mvp {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.04);
-  }
-
-  .player-tag {
-    font-size: 0.55rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .player-tag.good { color: var(--gold); }
-  .player-tag.bad { color: var(--red); }
-
-  .player-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.1em;
-    color: #fff;
-    margin-bottom: 0.4rem;
-  }
-
-  .player-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .stat-pill {
-    font-size: 0.65rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    padding: 0.15rem 0.5rem;
-    letter-spacing: 0.05em;
-    color: var(--gold2);
-  }
-
-  .player-comment {
-    font-size: 0.8rem;
-    line-height: 1.6;
-    color: var(--text-dim);
-  }
-
-  /* ── PREDICTION BOX ── */
-  .prediction-box {
-    background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 60%);
-    border: 1px solid var(--gold);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  .prediction-box::before {
-    content: '⚾ NEXT GAME';
-    position: absolute;
-    top: -0.6rem;
-    left: 1.5rem;
-    background: var(--bg);
-    padding: 0 0.6rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-  }
-
-  .matchup {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1rem 0 1.5rem;
-  }
-
-  .matchup-team {
-    text-align: center;
-    flex: 1;
-  }
-
-  .matchup-team-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 0.1em;
-    color: #fff;
-  }
-
-  .matchup-pitcher {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    margin-top: 0.2rem;
-  }
-
-  .matchup-vs {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    color: var(--text-dim);
-    letter-spacing: 0.2em;
-    padding: 0 1.5rem;
-  }
-
-  .win-prob {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .prob-bar {
-    flex: 1;
-    height: 6px;
-    background: var(--bg);
-    border-radius: 0;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  .prob-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold), var(--gold2));
-    transition: width 1s ease;
-  }
-
-  .prob-label {
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    min-width: 3rem;
-    text-align: right;
-  }
-
-  /* ── GLOSSARY ── */
-  .glossary {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .glossary-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .glossary-item { }
-
-  .glossary-term {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    margin-bottom: 0.2rem;
-  }
-
-  .glossary-def {
-    font-size: 0.78rem;
-    line-height: 1.55;
-    color: var(--text-dim);
-  }
-
-  /* ── SIDEBAR ── */
-  aside { position: sticky; top: 2rem; align-self: start; }
-
-  .sidebar-widget {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 1.4rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .widget-title {
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* Standings */
-  .standings-row {
-    display: grid;
-    grid-template-columns: auto 1fr auto auto auto;
-    gap: 0.5rem 0.8rem;
-    align-items: center;
-    padding: 0.45rem 0;
-    font-size: 0.78rem;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-  }
-
-  .standings-row:last-child { border-bottom: none; }
-
-  .rank {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    width: 1rem;
-    text-align: center;
-  }
-
-  .rank.first { color: var(--gold); }
-
-  .s-team { color: var(--text); font-size: 0.8rem; }
-  .s-team.active { color: var(--gold2); font-weight: 500; }
-
-  .s-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    text-align: right;
-  }
-
-  .s-num.highlight { color: var(--gold); }
-
-  .s-gb {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    text-align: right;
-    min-width: 2.5rem;
-  }
-
-  /* Recent Games */
-  .recent-row {
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.8rem;
-  }
-
-  .recent-row:last-child { border-bottom: none; }
-
-  .recent-date { font-size: 0.65rem; color: var(--text-dim); min-width: 3rem; }
-
-  .recent-matchup {
-    font-size: 0.8rem;
-    color: var(--text);
-    flex: 1;
-  }
-
-  .result-badge {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.85rem;
-    padding: 0.1rem 0.4rem;
-    letter-spacing: 0.05em;
-  }
-
-  .result-badge.w { background: rgba(201,168,76,0.15); color: var(--gold); }
-  .result-badge.l { background: rgba(224,52,52,0.12); color: var(--red); }
-
-  /* Ad placeholder */
-  .ad-placeholder {
-    background: var(--bg3);
-    border: 1px dashed rgba(255,255,255,0.08);
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .ad-placeholder span {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: rgba(255,255,255,0.12);
-    text-transform: uppercase;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-  }
-
-  .footer-copy {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero { animation: fadeUp 0.7s ease both; }
-  .analysis-block { animation: fadeUp 0.5s ease both; }
-  .analysis-block:nth-child(2) { animation-delay: 0.1s; }
-  .analysis-block:nth-child(3) { animation-delay: 0.15s; }
-  .analysis-block:nth-child(4) { animation-delay: 0.2s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; gap: 2rem; }
-    main { grid-template-columns: 1fr; }
-    .player-grid { grid-template-columns: 1fr; }
-    .glossary-grid { grid-template-columns: 1fr; }
-    nav { display: none; }
-    .footer-inner { flex-direction: column; gap: 1rem; }
+    --bg:#06090e;--bg2:#0a0f16;--bg3:#0f1520;--bg4:#131c28;
+    --orange:#f4812a;--orange2:#fca55a;
+    --gold:#c9a84c;--gold2:#e8c97a;
+    --red:#e03434;--green:#2ecc71;
+    --text:#e4ddd0;--text-dim:#6a6458;
+    --border:rgba(244,129,42,0.12);--border2:rgba(244,129,42,0.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-weight:300;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+  header{position:sticky;top:0;z-index:100;background:rgba(6,9,14,0.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .header-inner{max-width:1080px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{display:flex;align-items:baseline;gap:.6rem;text-decoration:none;}
+  .logo-main{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.15em;color:var(--orange);}
+  .logo-sub{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);}
+  nav{display:flex;gap:1.8rem;align-items:center;}
+  nav a{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+  nav a:hover{color:var(--orange);}
+
+  .ticker{background:var(--orange);height:30px;display:flex;align-items:center;overflow:hidden;}
+  .ticker-label{background:#000;color:var(--orange);font-family:'Bebas Neue',sans-serif;font-size:.8rem;letter-spacing:.15em;padding:0 1rem;height:100%;display:flex;align-items:center;white-space:nowrap;flex-shrink:0;}
+  .ticker-track{display:flex;animation:scroll 35s linear infinite;white-space:nowrap;}
+  .ticker-track span{font-size:.72rem;font-weight:600;color:#000;padding:0 2.5rem;letter-spacing:.04em;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#06090e 0%,#0d1520 60%,#111820 100%);border-bottom:1px solid var(--border);}
+  .hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 15% 50%,rgba(244,129,42,.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 20%,rgba(244,129,42,.04) 0%,transparent 45%);}
+  .hero-watermark{position:absolute;right:-2rem;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:22rem;color:rgba(244,129,42,.025);letter-spacing:-.05em;pointer-events:none;line-height:1;user-select:none;}
+  .hero-inner{max-width:1080px;margin:0 auto;padding:5rem 2rem 4rem;position:relative;z-index:1;}
+  .hero-kicker{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);}
+  .hero-kicker::before{content:'';width:2.5rem;height:1px;background:var(--orange);}
+  .hero-title{font-family:'Noto Serif KR',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.2;color:#fff;margin-bottom:1.5rem;}
+  .hero-title .accent{color:var(--orange);}
+  .hero-lead{font-size:1rem;line-height:1.9;color:rgba(228,221,208,.7);max-width:58ch;margin-bottom:2.5rem;}
+
+  .grade-wrap{display:inline-flex;align-items:center;gap:1.5rem;padding:1.2rem 2rem;background:rgba(244,129,42,.06);border:1px solid var(--border);margin-bottom:2.5rem;}
+  .grade-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);}
+  .grade-value{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--orange);line-height:1;letter-spacing:.05em;}
+  .grade-desc{font-size:.85rem;color:var(--text);line-height:1.5;max-width:20ch;}
+
+  .hero-stats{display:flex;flex-wrap:wrap;border:1px solid var(--border);background:var(--bg3);}
+  .h-stat{padding:1rem 1.5rem;border-right:1px solid var(--border);flex:1;min-width:110px;}
+  .h-stat:last-child{border-right:none;}
+  .h-stat-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--orange);letter-spacing:.05em;display:block;line-height:1;}
+  .h-stat-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-top:.3rem;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 2rem 6rem;display:grid;grid-template-columns:1fr 280px;gap:3rem;}
+  article{min-width:0;}
+
+  .sec-head{display:flex;align-items:center;gap:1rem;margin:3rem 0 1.5rem;}
+  .sec-icon{font-size:1.1rem;flex-shrink:0;}
+  .sec-title{font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:700;color:#fff;}
+  .sec-line{flex:1;height:1px;background:var(--border);}
+
+  .block{background:var(--bg3);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;position:relative;overflow:hidden;}
+  .block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent);}
+  .block-title{font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid var(--border2);}
+  .block p{font-size:.9rem;line-height:1.95;color:rgba(228,221,208,.8);margin-bottom:.8rem;}
+  .block p:last-child{margin-bottom:0;}
+  .block strong{color:var(--orange2);font-weight:500;}
+
+  .player-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.5rem;}
+  .p-card{background:var(--bg);border:1px solid var(--border);padding:1.1rem;position:relative;overflow:hidden;transition:border-color .2s;}
+  .p-card:hover{border-color:var(--orange);}
+  .p-card.key{border-color:var(--orange);}
+  .p-card.key::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange2));}
+  .p-tag{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem;}
+  .p-tag.in{color:var(--green);}
+  .p-tag.out{color:var(--red);}
+  .p-tag.key-tag{color:var(--orange);}
+  .p-tag.watch{color:var(--gold);}
+  .p-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.08em;color:#fff;margin-bottom:.3rem;}
+  .p-pos{font-size:.65rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem;}
+  .p-stats{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.5rem;}
+  .p-pill{font-size:.6rem;padding:.15rem .4rem;background:rgba(244,129,42,.1);border:1px solid var(--border);color:var(--orange2);letter-spacing:.05em;}
+  .p-comment{font-size:.75rem;line-height:1.55;color:var(--text-dim);}
+
+  .inout-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+  .inout-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;padding:.5rem .8rem;margin-bottom:.5rem;}
+  .inout-label.in{color:var(--green);background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.15);}
+  .inout-label.out{color:var(--red);background:rgba(224,52,52,.06);border:1px solid rgba(224,52,52,.15);}
+  .inout-item{display:flex;align-items:flex-start;gap:.6rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem;}
+  .inout-item:last-child{border-bottom:none;}
+  .inout-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:.35rem;}
+  .inout-dot.in{background:var(--green);}
+  .inout-dot.out{background:var(--red);}
+  .inout-name{color:#fff;font-weight:500;}
+  .inout-detail{font-size:.72rem;color:var(--text-dim);margin-top:.1rem;}
+
+  .sw-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.5rem;}
+  .sw-card{padding:1.2rem;border:1px solid;}
+  .sw-card.s{border-color:rgba(46,204,113,.2);background:rgba(46,204,113,.03);}
+  .sw-card.w{border-color:rgba(224,52,52,.2);background:rgba(224,52,52,.03);}
+  .sw-label{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:.8rem;}
+  .sw-label.s{color:var(--green);}
+  .sw-label.w{color:var(--red);}
+  .sw-list{list-style:none;}
+  .sw-list li{font-size:.82rem;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:rgba(228,221,208,.8);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5;}
+  .sw-list li:last-child{border-bottom:none;}
+
+  .pred-box{background:linear-gradient(135deg,rgba(244,129,42,.08) 0%,transparent 70%);border:1px solid var(--orange);padding:2rem;margin:1.5rem 0;position:relative;}
+  .pred-box::before{content:'⚾ 2026 시즌 전망';position:absolute;top:-.65rem;left:1.5rem;background:var(--bg);padding:0 .7rem;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);}
+  .pred-title{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:1rem;}
+  .prob-wrap{margin:1rem 0;}
+  .prob-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem;}
+  .prob-name{font-size:.7rem;color:var(--text-dim);min-width:80px;}
+  .prob-bar{flex:1;height:5px;background:rgba(255,255,255,.05);}
+  .prob-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));}
+  .prob-pct{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:2.5rem;text-align:right;}
+
+  .quote-block{border-left:3px solid var(--orange);padding:1rem 1.2rem;background:rgba(244,129,42,.04);margin:1rem 0;}
+  .quote-block p{font-size:.88rem;line-height:1.75;color:var(--text);font-style:italic;}
+  .quote-source{font-size:.65rem;color:var(--text-dim);letter-spacing:.1em;margin-top:.4rem;}
+
+  aside{position:sticky;top:5rem;align-self:start;}
+  .widget{background:var(--bg3);border:1px solid var(--border);padding:1.3rem;margin-bottom:1.5rem;}
+  .widget-title{font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--orange);padding-bottom:.8rem;margin-bottom:1rem;border-bottom:1px solid var(--border);}
+  .roster-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.8rem;}
+  .roster-row:last-child{border-bottom:none;}
+  .r-pos{font-size:.6rem;color:var(--orange);min-width:1.8rem;letter-spacing:.05em;}
+  .r-name{color:var(--text);flex:1;padding:0 .5rem;}
+  .r-name.star{color:var(--orange2);font-weight:500;}
+  .r-hand{font-size:.6rem;color:var(--text-dim);}
+  .sched-row{padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center;}
+  .sched-row:last-child{border-bottom:none;}
+  .sched-date{font-size:.65rem;color:var(--text-dim);min-width:3rem;}
+  .sched-opp{font-size:.8rem;color:var(--text);flex:1;}
+  .sched-loc{font-size:.6rem;color:var(--text-dim);padding:.1rem .4rem;border:1px solid var(--border);}
+  .ad-slot{border:1px dashed rgba(255,255,255,.07);height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;margin-bottom:1.5rem;}
+  .ad-slot span{font-size:.58rem;letter-spacing:.3em;color:rgba(255,255,255,.1);text-transform:uppercase;}
+
+  @keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  .hero-inner{animation:up .7s ease both;}
+  .block{animation:up .5s ease both;}
+
+  footer{border-top:1px solid var(--border);padding:2rem;}
+  .footer-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.15em;color:var(--orange);}
+  .footer-copy{font-size:.68rem;color:var(--text-dim);letter-spacing:.1em;}
+
+  @media(max-width:768px){
+    .wrap{grid-template-columns:1fr;}
+    .player-grid{grid-template-columns:1fr;}
+    .inout-grid{grid-template-columns:1fr;}
+    .sw-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+    .footer-inner{flex-direction:column;gap:.8rem;}
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="header-inner">
     <a href="#" class="logo">
@@ -789,352 +173,223 @@
     <nav>
       <a href="#">오늘의 경기</a>
       <a href="#">팀 분석</a>
-      <a href="#">선수 통계</a>
-      <a href="#" class="nav-cta">구독하기</a>
+      <a href="netflix-mlb-analysis.html">넷플릭스 중계 분석</a>
     </nav>
   </div>
 </header>
 
-<!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-label">⚾ LIVE</div>
+  <div class="ticker-label">🔶 SF GIANTS</div>
   <div class="ticker-track">
-    <span>다저스 7 - 4 파드리스 ✦ 오타니 2홈런 4타점 ✦ 양키스 5 - 3 레드삭스 ✦ 애스트로스 8 - 2 레인저스 ✦ 메츠 4 - 6 브레이브스 ✦ 필리스 3 - 1 마리너스</span>
-    <span>다저스 7 - 4 파드리스 ✦ 오타니 2홈런 4타점 ✦ 양키스 5 - 3 레드삭스 ✦ 애스트로스 8 - 2 레인저스 ✦ 메츠 4 - 6 브레이브스 ✦ 필리스 3 - 1 마리너스</span>
+    <span>2026 개막전 오늘 오전 9시 · 넷플릭스 생중계 ✦ 이정후 스프링캠프 타율 .455 최상의 폼 ✦ 라파엘 데버스 영입 완료 ✦ 블레이크 스넬 → 다저스 이적 ✦ 로건 웹 에이스 건재 ✦ 윌리 아다메스 영입 ✦ 오늘 상대: 뉴욕 양키스</span>
+    <span>2026 개막전 오늘 오전 9시 · 넷플릭스 생중계 ✦ 이정후 스프링캠프 타율 .455 최상의 폼 ✦ 라파엘 데버스 영입 완료 ✦ 블레이크 스넬 → 다저스 이적 ✦ 로건 웹 에이스 건재 ✦ 윌리 아다메스 영입 ✦ 오늘 상대: 뉴욕 양키스</span>
   </div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">2025년 3월 26일 · 다저스 vs 파드리스</div>
-    <h1 class="hero-title">
-      오타니의 밤,<br>
-      <em>다저 스타디움이 불탔다</em>
-    </h1>
-    <p class="hero-lead">
-      9회까지 손에 땀을 쥐는 접전. 오타니 쇼헤이가 6회 결정적인 투런 홈런으로 경기를 뒤집었고,
-      야마모토 요시노부의 6이닝 퀄리티 스타트가 팀 승리를 견인했습니다.
-      왜 이 경기가 포스트시즌 향방을 바꿀 분기점이 될 수 있는지 낱낱이 분석합니다.
-    </p>
-    <div class="hero-meta">
-      <div class="meta-item">
-        <span class="meta-label">최종 스코어</span>
-        <span class="meta-value">7 — 4</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">오타니 홈런</span>
-        <span class="meta-value">2 HR</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">관중</span>
-        <span class="meta-value">52,381</span>
-      </div>
+  <div class="hero-glow"></div>
+  <div class="hero-watermark">SF</div>
+  <div class="hero-inner">
+    <div class="hero-kicker">2026 MLB 시즌 개막 · 샌프란시스코 자이언츠</div>
+    <h1 class="hero-title">이정후·데버스·아다메스,<br><span class="accent">자이언츠의 야망이 시작된다</span></h1>
+    <p class="hero-lead">2026 시즌 샌프란시스코 자이언츠는 달라졌습니다. 오프시즌 공격적 전력 보강으로 타선 화력이 리그 최상위권으로 올라섰습니다. 이정후의 부활, 데버스의 파괴력, 아다메스의 안정감. 하지만 불펜 공백이라는 숙제도 남아있습니다. 개막 전까지의 모든 변화를 완전 정리합니다.</p>
+    <div class="grade-wrap">
+      <div><div class="grade-label">2026 시즌 기대 등급</div><div class="grade-value">B+</div></div>
+      <div style="width:1px;height:3.5rem;background:var(--border)"></div>
+      <div class="grade-desc">공격력 대폭 상승, 투수진 불안이 변수</div>
     </div>
-  </div>
-
-  <!-- SCOREBOARD -->
-  <div class="scoreboard">
-    <div class="score-header">
-      <span class="score-label">Final Score</span>
-      <span class="score-status">FINAL</span>
-    </div>
-    <div class="score-body">
-      <div class="score-row">
-        <div class="team-info">
-          <span class="team-name">LAD</span>
-          <span class="team-record">다저스 · 18-8</span>
-        </div>
-        <span class="team-score">7</span>
-        <span class="winner-tag">WIN</span>
-      </div>
-      <div class="score-row">
-        <div class="team-info">
-          <span class="team-name">SDP</span>
-          <span class="team-record">파드리스 · 14-12</span>
-        </div>
-        <span class="team-score lose">4</span>
-        <span></span>
-      </div>
-      <div class="innings-row">
-        <div class="inn-cell"><span class="inn-num">1</span><span class="inn-score">0</span></div>
-        <div class="inn-cell"><span class="inn-num">2</span><span class="inn-score">2</span></div>
-        <div class="inn-cell"><span class="inn-num">3</span><span class="inn-score">0</span></div>
-        <div class="inn-cell"><span class="inn-num">4</span><span class="inn-score">1</span></div>
-        <div class="inn-cell"><span class="inn-num">5</span><span class="inn-score">0</span></div>
-        <div class="inn-cell"><span class="inn-num">6</span><span class="inn-score">3</span></div>
-        <div class="inn-cell"><span class="inn-num">7</span><span class="inn-score">0</span></div>
-        <div class="inn-cell"><span class="inn-num">8</span><span class="inn-score">1</span></div>
-        <div class="inn-cell"><span class="inn-num">9</span><span class="inn-score">0</span></div>
-      </div>
+    <div class="hero-stats">
+      <div class="h-stat"><span class="h-stat-num">4</span><div class="h-stat-label">주요 신규 영입</div></div>
+      <div class="h-stat"><span class="h-stat-num">3</span><div class="h-stat-label">주요 이탈 선수</div></div>
+      <div class="h-stat"><span class="h-stat-num">.455</span><div class="h-stat-label">이정후 스프링 타율</div></div>
+      <div class="h-stat"><span class="h-stat-num">88~92</span><div class="h-stat-label">예상 시즌 승수</div></div>
     </div>
   </div>
 </div>
 
-<!-- AD PLACEHOLDER TOP -->
-<div style="max-width:1100px;margin:0 auto 1rem;padding:0 2rem;">
-  <div class="ad-placeholder"><span>Advertisement</span></div>
+<div style="max-width:1080px;margin:1.5rem auto 0;padding:0 2rem;">
+  <div class="ad-slot"><span>Advertisement</span></div>
 </div>
 
-<!-- MAIN -->
-<main>
-  <article>
+<div class="wrap">
+<article>
 
-    <!-- 경기 총평 -->
-    <div class="section-tag">경기 총평</div>
-    <div class="analysis-block" data-num="01">
-      <div class="block-icon">📊</div>
-      <div class="block-title">이 경기, 한 문장으로 정리하면?</div>
-      <div class="block-body">
-        <p>
-          다저스가 <span class="highlight">7대 4</span>로 파드리스를 꺾으며 NL 서부 선두를 더욱 굳혔습니다.
-          경기 초반은 파드리스가 2회에 먼저 2점을 뽑아내며 유리한 흐름을 잡는 듯했습니다.
-          하지만 야구는 9회가 끝나야 압니다. 다저스는 4회 1점을 만회하더니,
-          <span class="highlight">6회에 오타니의 투런 홈런</span>으로 단숨에 역전에 성공했습니다.
-        </p>
-        <p>
-          오늘 경기의 키워드는 <strong style="color:var(--gold2)">"인내와 폭발"</strong>이었습니다.
-          5이닝 동안 참고 또 참다가, 6회 단 한 번의 스윙으로 모든 흐름을 바꿔버린
-          오타니의 홈런은 단순한 점수 이상의 의미를 갖습니다.
-          팀 전체가 "우리는 언제든 뒤집을 수 있다"는 자신감을 얻었으니까요.
-        </p>
-        <div class="key-moment">
-          <div class="key-moment-label">⚡ 경기 흐름의 분기점</div>
-          <p>6회 무사 1루, 카운트 2-1. 파드리스 선발 다르비시가 던진 커터가 가운데로 몰렸습니다. 오타니는 놓치지 않았습니다. 타구는 좌중간 담장을 훌쩍 넘어갔고, 다저 스타디움 5만 2천 관중이 일제히 일어났습니다. 스코어 3-2, 역전.</p>
-        </div>
+  <div class="sec-head">
+    <span class="sec-icon">🔄</span>
+    <h2 class="sec-title">오프시즌 선수단 변동 완전 정리</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">IN & OUT — 누가 왔고 누가 떠났나</div>
+    <div class="inout-grid">
+      <div>
+        <div class="inout-label in">✅ 새로 합류</div>
+        <div class="inout-item"><div class="inout-dot in"></div><div><div class="inout-name">라파엘 데버스 (3루수)</div><div class="inout-detail">전 보스턴 레드삭스 · 30HR급 좌타 장거리포 · 중심타선 강화</div></div></div>
+        <div class="inout-item"><div class="inout-dot in"></div><div><div class="inout-name">윌리 아다메스 (유격수)</div><div class="inout-detail">공수 겸비 유격수 · 타선 핵심 역할 담당</div></div></div>
+        <div class="inout-item"><div class="inout-dot in"></div><div><div class="inout-name">해리슨 베이더 (중견수)</div><div class="inout-detail">이정후 우익수 전환 위한 중견수 영입</div></div></div>
+        <div class="inout-item"><div class="inout-dot in"></div><div><div class="inout-name">루이스 아라에스 (2루수)</div><div class="inout-detail">연속 타격왕 출신 · 출루 머신 · 테이블 세터</div></div></div>
+      </div>
+      <div>
+        <div class="inout-label out">❌ 팀 이탈</div>
+        <div class="inout-item"><div class="inout-dot out"></div><div><div class="inout-name">블레이크 스넬 (선발)</div><div class="inout-detail">라이벌 LA 다저스로 이적 · 2선발 공백 최대 과제</div></div></div>
+        <div class="inout-item"><div class="inout-dot out"></div><div><div class="inout-name">카밀로 도발 (마무리)</div><div class="inout-detail">팀 이탈 · 불펜 마무리 공백 발생</div></div></div>
+        <div class="inout-item"><div class="inout-dot out"></div><div><div class="inout-name">타일러 로저스 (불펜)</div><div class="inout-detail">서브마린 계투 이탈 · 불펜 안정성 저하 우려</div></div></div>
       </div>
     </div>
+    <div class="quote-block">
+      <p>이번 오프시즌의 핵심 키워드는 "타선은 업그레이드, 투수진은 물음표"입니다. 데버스·아다메스 영입으로 화력은 분명 강해졌지만, 스넬·도발·로저스의 이탈로 인한 투수진 공백이 시즌 향방의 최대 변수입니다.</p>
+      <div class="quote-source">— MLB DAILY 분석</div>
+    </div>
+  </div>
 
-    <!-- 승패 결정 분석 -->
-    <div class="analysis-block" data-num="02">
-      <div class="block-icon">🎯</div>
-      <div class="block-title">왜 다저스가 이겼을까? 3가지 결정적 이유</div>
-      <div class="block-body">
-        <p>
-          <strong style="color:var(--gold2)">① 야마모토의 위기 관리</strong><br>
-          야마모토는 2회에 2실점 했지만, 3~6회 동안 무실점으로 버텼습니다.
-          <span class="highlight">6이닝 2실점은 "퀄리티 스타트"</span>라고 부르는데,
-          쉽게 말해 선발 투수가 팀이 이길 수 있는 최소 조건을 충족했다는 뜻입니다.
-          불펜에 부담을 최소화하며 팀 승리의 토대를 쌓았습니다.
-        </p>
-        <p>
-          <strong style="color:var(--gold2)">② 오타니의 클러치 능력</strong><br>
-          오타니는 오늘 4타수 2안타 2홈런 4타점. 숫자도 놀랍지만 더 중요한 건 타이밍입니다.
-          팀이 뒤처진 상황에서, 득점권에서, 꼭 필요한 순간에 터졌습니다.
-          이것이 MVP급 선수와 그냥 좋은 선수의 차이입니다.
-        </p>
-        <p>
-          <strong style="color:var(--gold2)">③ 파드리스 불펜의 붕괴</strong><br>
-          파드리스는 7회부터 불펜을 올렸는데, 3실점을 허용했습니다.
-          다르비시가 잘 막아왔던 경기를 불펜이 무너뜨린 셈입니다.
-          이는 파드리스 전력 구성의 약점 — 불펜 뎁스 부족 — 을 다시 한번 드러냈습니다.
-        </p>
+  <div class="sec-head">
+    <span class="sec-icon">⭐</span>
+    <h2 class="sec-title">2026 핵심 선수 분석</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="block">
+    <div class="block-title">주목해야 할 선수 6명</div>
+    <div class="player-grid">
+      <div class="p-card key">
+        <div class="p-tag key-tag">🔶 핵심 타자</div>
+        <div class="p-name">이정후</div>
+        <div class="p-pos">우익수 · 3번 타순 예상</div>
+        <div class="p-stats"><span class="p-pill">스프링 .455</span><span class="p-pill">OPS 1.227</span><span class="p-pill">1HR</span></div>
+        <p class="p-comment">수비 부담 덜고 우익수로 이동. 부상 재활 완료 후 최상의 몸 상태. 커리어 하이 도전.</p>
+      </div>
+      <div class="p-card key">
+        <div class="p-tag key-tag">🔶 중심 타선</div>
+        <div class="p-name">라파엘 데버스</div>
+        <div class="p-pos">3루수 · 4~5번 타순</div>
+        <div class="p-stats"><span class="p-pill">통산 .271</span><span class="p-pill">30HR급</span><span class="p-pill">좌타 장거리포</span></div>
+        <p class="p-comment">자이언츠 최대 오프시즌 영입. 오라클 파크 우측 담장 공략이 관건. 타선 중심축.</p>
+      </div>
+      <div class="p-card key">
+        <div class="p-tag key-tag">⚾ 에이스</div>
+        <div class="p-name">로건 웹</div>
+        <div class="p-pos">선발 투수 · 1선발</div>
+        <div class="p-stats"><span class="p-pill">ERA 3.25급</span><span class="p-pill">200K+</span><span class="p-pill">싱커 전문가</span></div>
+        <p class="p-comment">스넬 이탈 후 유일한 에이스. 혼자 짊어지는 선발진 부담이 크다. 건강이 핵심.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-tag key-tag">🛡️ 수비 기둥</div>
+        <div class="p-name">맷 채프먼</div>
+        <div class="p-pos">1루수 · 골드글러브 4회</div>
+        <div class="p-stats"><span class="p-pill">골드글러브 4회</span><span class="p-pill">20HR 보장</span><span class="p-pill">공수 양면</span></div>
+        <p class="p-comment">공수 양면 팀의 기둥. 데버스 영입으로 1루 이동. 수비 포지션 적응이 변수.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-tag in">✅ 신규 영입</div>
+        <div class="p-name">윌리 아다메스</div>
+        <div class="p-pos">유격수 · 클린업 후보</div>
+        <div class="p-stats"><span class="p-pill">공수 겸비</span><span class="p-pill">20HR 가능</span><span class="p-pill">안정적 수비</span></div>
+        <p class="p-comment">유격수 공백을 완벽히 메울 선수. 타선 하위에서 상위로 끌어올리는 역할.</p>
+      </div>
+      <div class="p-card">
+        <div class="p-tag watch">👀 주목 선수</div>
+        <div class="p-name">라이언 워커</div>
+        <div class="p-pos">불펜 · 마무리 후보</div>
+        <div class="p-stats"><span class="p-pill">ERA 4.11(2025)</span><span class="p-pill">마무리 도전</span><span class="p-pill">반등 필요</span></div>
+        <p class="p-comment">도발 이탈 후 마무리 자리 도전. 지난 시즌 흔들렸던 만큼 반등 여부가 불펜 성패를 결정.</p>
       </div>
     </div>
+  </div>
 
-    <!-- 선수 분석 -->
-    <div class="analysis-block" data-num="03">
-      <div class="block-icon">📈</div>
-      <div class="block-title">오늘의 선수별 퍼포먼스 분석</div>
-      <div class="block-body">
-        <div class="player-grid">
-          <div class="player-card mvp">
-            <div class="player-tag good">⭐ 오늘의 MVP</div>
-            <div class="player-name">OHTANI</div>
-            <div class="player-stats">
-              <span class="stat-pill">2 HR</span>
-              <span class="stat-pill">4 RBI</span>
-              <span class="stat-pill">2H/4AB</span>
-              <span class="stat-pill">타율 .312</span>
-            </div>
-            <p class="player-comment">역전 투런 홈런이 경기를 바꿨습니다. 클러치 능력 입증. 시즌 홈런 8개로 리그 3위.</p>
-          </div>
-          <div class="player-card">
-            <div class="player-tag good">✅ 잘한 선수</div>
-            <div class="player-name">YAMAMOTO</div>
-            <div class="player-stats">
-              <span class="stat-pill">6IP</span>
-              <span class="stat-pill">2ER</span>
-              <span class="stat-pill">8K</span>
-              <span class="stat-pill">ERA 2.84</span>
-            </div>
-            <p class="player-comment">6이닝 8탈삼진 2실점. 위기 상황에서 삼진으로 마무리하는 능력이 탁월했습니다.</p>
-          </div>
-          <div class="player-card">
-            <div class="player-tag bad">⚠️ 아쉬운 선수</div>
-            <div class="player-name">DARVISH</div>
-            <div class="player-stats">
-              <span class="stat-pill">5.1IP</span>
-              <span class="stat-pill">5ER</span>
-              <span class="stat-pill">오타니에 2HR</span>
-            </div>
-            <p class="player-comment">커터 제구가 흔들리며 오타니에게 두 차례 홈런을 맞았습니다. 6회 실책이 결정타.</p>
-          </div>
-          <div class="player-card">
-            <div class="player-tag good">✅ 숨은 공신</div>
-            <div class="player-name">FREEMAN</div>
-            <div class="player-stats">
-              <span class="stat-pill">2안타</span>
-              <span class="stat-pill">2득점</span>
-              <span class="stat-pill">출루율 .420</span>
-            </div>
-            <p class="player-comment">홈런은 없었지만 오타니 앞에서 꾸준히 출루. 보이지 않는 기여가 승리를 만들었습니다.</p>
-          </div>
-        </div>
+  <div class="sec-head">
+    <span class="sec-icon">📊</span>
+    <h2 class="sec-title">2026 자이언츠 강점 vs 약점</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="block">
+    <div class="sw-grid">
+      <div class="sw-card s">
+        <div class="sw-label s">✅ 강점</div>
+        <ul class="sw-list">
+          <li>💥 <span>데버스+아다메스 영입으로 역대급 타선</span></li>
+          <li>⚾ <span>이정후 부상 완쾌·우익수 전환으로 타격 집중</span></li>
+          <li>🏆 <span>로건 웹 에이스 건재, NL 최상위 선발</span></li>
+          <li>🧢 <span>밥 멜빈 감독의 안정적인 팀 운영</span></li>
+          <li>🏟️ <span>오라클 파크 홈 어드밴티지</span></li>
+        </ul>
+      </div>
+      <div class="sw-card w">
+        <div class="sw-label w">⚠️ 약점</div>
+        <ul class="sw-list">
+          <li>💔 <span>블레이크 스넬 이탈 → 2선발 공백 심각</span></li>
+          <li>🚪 <span>도발·로저스 이탈 → 불펜 재건 필요</span></li>
+          <li>📉 <span>오라클 파크 투수 친화 구장 → 데버스 홈런 적응 변수</span></li>
+          <li>🩹 <span>이정후 부상 재발 리스크 상존</span></li>
+          <li>❓ <span>젊은 불펜진 경험 부족</span></li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <!-- 다음 경기 예측 -->
-    <div class="prediction-box">
-      <div class="block-title" style="margin-bottom:0.5rem">🔮 내일 경기 예측</div>
-      <div class="matchup">
-        <div class="matchup-team">
-          <div class="matchup-team-name">LAD</div>
-          <div class="matchup-pitcher">선발: 케르쇼 (ERA 3.12)</div>
-        </div>
-        <div class="matchup-vs">VS</div>
-        <div class="matchup-team">
-          <div class="matchup-team-name">SDP</div>
-          <div class="matchup-pitcher">선발: 머스그로브 (ERA 3.87)</div>
-        </div>
-      </div>
-      <div class="block-body">
-        <p>
-          <strong style="color:var(--gold2)">다저스 승리 예상 (승률 62%)</strong><br>
-          케르쇼의 홈 구장 성적이 더 좋고, 파드리스는 현재 불펜이 흔들리고 있습니다.
-          하지만 머스그로브도 전통적으로 다저스전 성적이 좋아 방심은 금물입니다.
-        </p>
-        <p style="margin-top:0.8rem">
-          <strong style="color:var(--gold2)">주목할 선수:</strong> 파드리스 타티스 Jr.
-          최근 5경기 연속 출루 중이며, 케르쇼의 패스트볼을 강하게 잡아당기는 타격 스타일이 위협적입니다.
-        </p>
-        <div style="margin-top:1rem">
-          <div class="win-prob">
-            <span style="font-size:0.7rem;min-width:3rem;color:var(--text-dim)">LAD</span>
-            <div class="prob-bar"><div class="prob-fill" style="width:62%"></div></div>
-            <span class="prob-label">62%</span>
-          </div>
-          <div class="win-prob">
-            <span style="font-size:0.7rem;min-width:3rem;color:var(--text-dim)">SDP</span>
-            <div class="prob-bar"><div class="prob-fill" style="width:38%;background:linear-gradient(90deg,#555,#777)"></div></div>
-            <span class="prob-label">38%</span>
-          </div>
-        </div>
-      </div>
+  <div class="pred-box">
+    <div class="pred-title">🔮 2026 시즌 최종 전망</div>
+    <div class="block" style="border:none;padding:0;background:transparent;margin-bottom:1rem;">
+      <p><strong>포스트시즌 진출 가능성 65%.</strong> 타선 파괴력은 리그 상위권이지만, 투수진의 안정성이 시즌 성패를 가를 것입니다. <strong>로건 웹이 200이닝을 건강하게 소화하고</strong>, 워커가 마무리로 제 몫을 한다면 와일드카드는 충분히 가능합니다.</p>
+      <p>한국 팬들에게 핵심 포인트는 역시 <strong>이정후</strong>입니다. 스프링캠프 타율 0.455는 단순한 숫자가 아닙니다. 수비 부담을 덜고 타격에만 집중하는 올 시즌, 커리어 하이를 기록할 가능성이 매우 높습니다.</p>
     </div>
-
-    <!-- 야구 용어 설명 -->
-    <div class="glossary">
-      <div class="section-tag">야구 입문자를 위한</div>
-      <div class="block-title">💡 오늘 경기에서 나온 용어 설명</div>
-      <div class="glossary-grid">
-        <div class="glossary-item">
-          <div class="glossary-term">퀄리티 스타트</div>
-          <div class="glossary-def">선발 투수가 6이닝 이상 3실점 이하로 막은 경우. 팀이 승리할 수 있는 최소 조건을 갖췄다는 의미입니다.</div>
-        </div>
-        <div class="glossary-item">
-          <div class="glossary-term">클러치 히터</div>
-          <div class="glossary-def">득점권(2루 또는 3루에 주자가 있을 때)처럼 결정적인 순간에 강한 타자. 오타니가 대표적입니다.</div>
-        </div>
-        <div class="glossary-item">
-          <div class="glossary-term">불펜 뎁스</div>
-          <div class="glossary-def">구원 투수진의 두께. 여러 명의 믿을 수 있는 불펜 투수가 있어야 긴 시즌에서 살아남습니다.</div>
-        </div>
-        <div class="glossary-item">
-          <div class="glossary-term">커터 (Cut Fastball)</div>
-          <div class="glossary-def">타자 쪽으로 살짝 휘어들어오는 빠른 공. 타자의 배트 끝을 부수는 것으로 유명한 구종입니다.</div>
-        </div>
-      </div>
+    <div class="prob-wrap">
+      <div class="prob-row"><span class="prob-name">포스트시즌 진출</span><div class="prob-bar"><div class="prob-fill" style="width:65%"></div></div><span class="prob-pct">65%</span></div>
+      <div class="prob-row"><span class="prob-name">지구 우승</span><div class="prob-bar"><div class="prob-fill" style="width:22%"></div></div><span class="prob-pct">22%</span></div>
+      <div class="prob-row"><span class="prob-name">이정후 올스타</span><div class="prob-bar"><div class="prob-fill" style="width:58%"></div></div><span class="prob-pct">58%</span></div>
+      <div class="prob-row"><span class="prob-name">100승 이상</span><div class="prob-bar"><div class="prob-fill" style="width:18%"></div></div><span class="prob-pct">18%</span></div>
     </div>
+    <p style="font-size:.9rem;color:var(--orange2);font-weight:500;margin-top:1rem;">예상 최종 성적: 88~92승 · NL 서부 2위 또는 와일드카드 진출</p>
+  </div>
 
-  </article>
+</article>
 
-  <!-- SIDEBAR -->
-  <aside>
-    <div class="ad-placeholder"><span>Advertisement</span></div>
+<aside>
+  <div class="ad-slot"><span>Advertisement</span></div>
 
-    <!-- Standings -->
-    <div class="sidebar-widget">
-      <div class="widget-title">NL 서부 순위</div>
-      <div class="standings-row">
-        <span class="rank first">1</span>
-        <span class="s-team active">다저스</span>
-        <span class="s-num highlight">18</span>
-        <span class="s-num">8</span>
-        <span class="s-gb">—</span>
-      </div>
-      <div class="standings-row">
-        <span class="rank">2</span>
-        <span class="s-team">파드리스</span>
-        <span class="s-num">14</span>
-        <span class="s-num">12</span>
-        <span class="s-gb">4.0</span>
-      </div>
-      <div class="standings-row">
-        <span class="rank">3</span>
-        <span class="s-team">자이언츠</span>
-        <span class="s-num">13</span>
-        <span class="s-num">13</span>
-        <span class="s-gb">5.0</span>
-      </div>
-      <div class="standings-row">
-        <span class="rank">4</span>
-        <span class="s-team">다이아몬드백스</span>
-        <span class="s-num">11</span>
-        <span class="s-num">15</span>
-        <span class="s-gb">7.0</span>
-      </div>
-      <div class="standings-row">
-        <span class="rank">5</span>
-        <span class="s-team">로키스</span>
-        <span class="s-num">7</span>
-        <span class="s-num">19</span>
-        <span class="s-gb">11.0</span>
-      </div>
+  <div class="widget">
+    <div class="widget-title">2026 개막 주요 로스터</div>
+    <div class="roster-row"><span class="r-pos">SP</span><span class="r-name star">로건 웹</span><span class="r-hand">우투</span></div>
+    <div class="roster-row"><span class="r-pos">RF</span><span class="r-name star">이정후</span><span class="r-hand">좌타</span></div>
+    <div class="roster-row"><span class="r-pos">3B</span><span class="r-name star">라파엘 데버스</span><span class="r-hand">좌타</span></div>
+    <div class="roster-row"><span class="r-pos">SS</span><span class="r-name star">윌리 아다메스</span><span class="r-hand">우타</span></div>
+    <div class="roster-row"><span class="r-pos">1B</span><span class="r-name">맷 채프먼</span><span class="r-hand">우타</span></div>
+    <div class="roster-row"><span class="r-pos">2B</span><span class="r-name">루이스 아라에스</span><span class="r-hand">우타</span></div>
+    <div class="roster-row"><span class="r-pos">CF</span><span class="r-name">해리슨 베이더</span><span class="r-hand">우타</span></div>
+    <div class="roster-row"><span class="r-pos">CL</span><span class="r-name">라이언 워커</span><span class="r-hand">우투</span></div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-title">개막 초반 주요 일정</div>
+    <div class="sched-row"><span class="sched-date">3/26</span><span class="sched-opp">vs 뉴욕 양키스</span><span class="sched-loc">홈</span></div>
+    <div class="sched-row"><span class="sched-date">3/27</span><span class="sched-opp">vs 뉴욕 양키스</span><span class="sched-loc">홈</span></div>
+    <div class="sched-row"><span class="sched-date">3/28</span><span class="sched-opp">vs 뉴욕 양키스</span><span class="sched-loc">홈</span></div>
+    <div class="sched-row"><span class="sched-date">3/31</span><span class="sched-opp">@ LA 다저스</span><span class="sched-loc">원정</span></div>
+    <div class="sched-row"><span class="sched-date">4/1</span><span class="sched-opp">@ LA 다저스</span><span class="sched-loc">원정</span></div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-title">관련 분석 글</div>
+    <a href="netflix-mlb-analysis.html" style="display:block;text-decoration:none;padding:.8rem 0;border-bottom:1px solid var(--border2);">
+      <div style="font-size:.75rem;color:var(--text);line-height:1.5;margin-bottom:.3rem;">넷플릭스 MLB 첫 중계 성공할까?</div>
+      <div style="font-size:.62rem;color:var(--orange);">한국 시청자 관점 완전 분석 →</div>
+    </a>
+    <div style="padding:.8rem 0;">
+      <div style="font-size:.75rem;color:var(--text);line-height:1.5;margin-bottom:.3rem;">양키스 vs 자이언츠 개막전 예측</div>
+      <div style="font-size:.62rem;color:var(--text-dim);">경기 후 업데이트 예정</div>
     </div>
+  </div>
 
-    <!-- Recent Games -->
-    <div class="sidebar-widget">
-      <div class="widget-title">다저스 최근 5경기</div>
-      <div class="recent-row">
-        <span class="recent-date">3/25</span>
-        <span class="recent-matchup">vs 파드리스</span>
-        <span class="result-badge w">W 7-4</span>
-      </div>
-      <div class="recent-row">
-        <span class="recent-date">3/24</span>
-        <span class="recent-matchup">vs 자이언츠</span>
-        <span class="result-badge w">W 5-2</span>
-      </div>
-      <div class="recent-row">
-        <span class="recent-date">3/23</span>
-        <span class="recent-matchup">@ 메츠</span>
-        <span class="result-badge l">L 3-6</span>
-      </div>
-      <div class="recent-row">
-        <span class="recent-date">3/22</span>
-        <span class="recent-matchup">@ 메츠</span>
-        <span class="result-badge w">W 9-1</span>
-      </div>
-      <div class="recent-row">
-        <span class="recent-date">3/21</span>
-        <span class="recent-matchup">vs 브레이브스</span>
-        <span class="result-badge w">W 4-3</span>
-      </div>
-    </div>
+  <div class="ad-slot"><span>Advertisement</span></div>
+</aside>
+</div>
 
-    <div class="ad-placeholder"><span>Advertisement</span></div>
-
-  </aside>
-</main>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">MLB DAILY</div>
-    <div class="footer-copy">© 2025 MLB Daily KR · 매일 경기 심층 분석</div>
+    <div class="footer-copy">© 2026 MLB Daily KR · 매일 경기 심층 분석</div>
   </div>
 </footer>
-
 </body>
 </html>
