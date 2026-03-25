@@ -1,0 +1,19 @@
+{
+  "date": "2026-03-25",
+  "games": [
+    {
+      "status": "Pre-Game",
+      "away": "뉴욕 양키스",
+      "home": "샌프란시스코 자이언츠",
+      "away_en": "New York Yankees",
+      "home_en": "San Francisco Giants",
+      "away_score": 0,
+      "home_score": 0,
+      "away_pitcher": "Max Fried",
+      "home_pitcher": "Logan Webb",
+      "homers": [],
+      "top_batters": [],
+      "game_pk": 823244
+    }
+  ]
+}
