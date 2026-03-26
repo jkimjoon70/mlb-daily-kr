@@ -1,0 +1,33 @@
+name: MLB Daily Review Bot
+
+on:
+  schedule:
+    - cron: "0 11 * * *"  # 매일 한국 시간 20:00(저녁 8시)에 자동 실행
+  workflow_dispatch:      # 우리가 원할 때 수동으로 '실행' 버튼을 누를 수 있게 해줍니다
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: pip install google-generativeai
+        
+      - name: Run AI Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python mlb_daily.py
+        
+      - name: Commit and Push Report
+        run: |
+          git config --global user.name "AI-Agent"
+          git config --global user.email "agent@mlb-daily.kr"
+          git add .
+          git commit -m "Auto-update MLB Review: $(date +%Y-%m-%d)" || echo "No changes to commit"
+          git push
