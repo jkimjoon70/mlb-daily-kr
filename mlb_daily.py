@@ -5,8 +5,7 @@ from datetime import datetime
 # 1. 깃허브 금고에서 열쇠(API 키) 가져오기
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
-
+model = genai.GenerativeModel('gemini-3-flash')
 def generate_mlb_report():
     today = datetime.now()
     today_str = today.strftime("%Y-%m-%d")
