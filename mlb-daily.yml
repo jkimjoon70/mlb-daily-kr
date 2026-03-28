@@ -1,34 +1,34 @@
-name: MLB 매일 경기 결과 수집
+name: MLB Daily Auto Update
 
 on:
   schedule:
-    # 매일 한국시간 오전 9시 (UTC 00:00) 자동 실행
-    - cron: '0 0 * * *'
-  workflow_dispatch:  # 수동 실행 버튼도 활성화
+    - cron: '0 0 * * *'   # 매일 09:00 KST (UTC 00:00)
+  workflow_dispatch:        # 수동 실행 버튼
 
 jobs:
-  collect:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 저장소 체크아웃
+      - name: 레포 체크아웃
         uses: actions/checkout@v4
 
-      - name: Python 설정
+      - name: Python 설치
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: MLB 경기 결과 수집
+      - name: 의존성 설치
+        run: pip install anthropic
+
+      - name: MLB 리포트 생성
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python mlb_daily.py
 
-      - name: Git 설정
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: 변경사항 커밋 & 푸시
-        run: |
-          git add data/
-          git diff --staged --quiet || git commit -m "MLB 경기결과 자동 업데이트 $(date +'%Y-%m-%d')"
-          git push
+      - name: GitHub Pages에 자동 배포
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update MLB Review: $(date +'%Y-%m-%d')"
+          commit_user_name: AI-Agent
+          commit_user_email: ai-agent@mlb-daily-kr.github.io
